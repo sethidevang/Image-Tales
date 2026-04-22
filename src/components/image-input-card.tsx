@@ -89,35 +89,36 @@ export default function ImageInputCard({ onImageSelected, isLoading }: ImageInpu
   const hasImage = !!selectedImage;
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <FileUp />
-          <span>Upload Your Image</span>
+    <Card className="w-full bg-white">
+      <CardHeader className="p-10 border-b-8 border-black bg-neo-main">
+        <CardTitle className="flex items-center gap-4 text-4xl font-black uppercase">
+          <FileUp className="w-14 h-14" />
+          <span>Upload Image</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col items-center gap-4">
-        <div className="relative w-full aspect-video rounded-lg bg-muted flex items-center justify-center overflow-hidden">
+      <CardContent className="flex flex-col items-center gap-8 p-10">
+        <div className="relative w-full aspect-video border-8 border-black bg-neo-main/10 flex items-center justify-center overflow-hidden shadow-inner">
           {showCamera ? (
             <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
           ) : selectedImage ? (
-            <Image src={selectedImage} alt="Selected preview" layout="fill" objectFit="contain" />
+            <Image src={selectedImage} alt="Selected preview" layout="fill" objectFit="contain" className="p-4" />
           ) : (
-            <div className="text-center text-muted-foreground p-4">
-              <p>Upload a file or use your camera to begin.</p>
+            <div className="text-center p-8">
+              <p className="font-black text-3xl uppercase font-mono mb-4 text-black/40">No image selected</p>
+              <p className="text-lg font-bold uppercase opacity-30">Capture or upload to start.</p>
             </div>
           )}
           <canvas ref={canvasRef} className="hidden" />
         </div>
         
         {showCamera && (
-          <div className="flex w-full gap-2">
-            <Button onClick={handleCapture} className="w-full" disabled={isCameraLoading}>
-              <Camera className="mr-2" />
+          <div className="flex w-full gap-6">
+            <Button onClick={handleCapture} className="w-full py-10 text-2xl" variant="neoAccent" disabled={isCameraLoading}>
+              <Camera className="mr-3 w-8 h-8" />
               Capture
             </Button>
-            <Button onClick={() => setShowCamera(false)} variant="outline" className="w-full">
-              <X className="mr-2" />
+            <Button onClick={() => setShowCamera(false)} variant="outline" className="w-full py-10 text-2xl">
+              <X className="mr-3 w-8 h-8" />
               Cancel
             </Button>
           </div>
@@ -125,22 +126,28 @@ export default function ImageInputCard({ onImageSelected, isLoading }: ImageInpu
 
         {!showCamera && (
           <>
-            <div className="flex w-full gap-2">
-              <Button onClick={() => fileInputRef.current?.click()} className="w-full" disabled={isLoading}>
-                <FileUp className="mr-2" />
-                Choose File
+            <div className="grid grid-cols-2 w-full gap-6">
+              <Button onClick={() => fileInputRef.current?.click()} className="w-full py-8 text-xl" variant="outline" disabled={isLoading}>
+                <FileUp className="mr-2 w-6 h-6" />
+                Upload
               </Button>
               <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
               
-              <Button onClick={startCamera} variant="secondary" className="w-full" disabled={isLoading || isCameraLoading}>
-                {isCameraLoading ? <LoaderCircle className="mr-2 animate-spin" /> : <Camera className="mr-2" />}
-                Use Camera
+              <Button onClick={startCamera} variant="neoAccent" className="w-full py-8 text-xl" disabled={isLoading || isCameraLoading}>
+                {isCameraLoading ? <LoaderCircle className="mr-2 w-6 h-6 animate-spin" /> : <Camera className="mr-2 w-6 h-6" />}
+                Camera
               </Button>
             </div>
             {hasImage && (
-                <Button onClick={() => onImageSelected(selectedImage)} disabled={!hasImage || isLoading} size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                  {isLoading ? <LoaderCircle className="mr-2 animate-spin" /> : <Wand2 className="mr-2" />}
-                  {isLoading ? 'Generating Story...' : 'Generate Story'}
+                <Button 
+                  onClick={() => onImageSelected(selectedImage)} 
+                  disabled={!hasImage || isLoading} 
+                  size="lg" 
+                  magnetic={true}
+                  className="w-full bg-neo-main text-black border-8 border-black hover:bg-neo-main/90 font-black text-3xl py-12 mt-2 shadow-neo-lg"
+                >
+                  {isLoading ? <LoaderCircle className="mr-4 animate-spin w-12 h-12" /> : <Wand2 className="mr-4 w-12 h-12" />}
+                  {isLoading ? 'WORKING MAGIC...' : 'GENERATE STORY'}
                 </Button>
             )}
           </>

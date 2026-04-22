@@ -16,6 +16,7 @@ const GenerateStoryFromImageInputSchema = z.object({
     .describe(
       "A photo to inspire a story, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
+  apiKey: z.string().optional().describe('An optional Google AI API key to use for this generation.'),
 });
 export type GenerateStoryFromImageInput = z.infer<typeof GenerateStoryFromImageInputSchema>;
 
@@ -44,7 +45,11 @@ const generateStoryFromImageFlow = ai.defineFlow(
     outputSchema: GenerateStoryFromImageOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await prompt(input, {
+      config: {
+        apiKey: input.apiKey,
+      },
+    });
     return output!;
   }
 );

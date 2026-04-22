@@ -10,8 +10,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ["'PT Sans'", 'sans-serif'],
-        headline: ["'Playfair Display'", 'serif'],
+        body: ["'Inter'", 'sans-serif'],
+        headline: ["'Inter'", 'sans-serif'],
+        mono: ["'JetBrains Mono'", 'monospace'],
         code: ['monospace'],
       },
       colors: {
@@ -65,11 +66,31 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        // Neo-brutalist Phase 2 palette
+        neo: {
+          main: '#ffff00',
+          secondary: '#bd00ff',
+          accent: '#00ff94',
+          black: '#000000',
+          white: '#ffffff',
+          bg: '#fdfdfd',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        neo: '0px',
+      },
+      borderWidth: {
+        '4': '4px',
+        '8': '8px',
+      },
+      boxShadow: {
+        'neo': '8px 8px 0px 0px rgba(0, 0, 0, 1)',
+        'neo-sm': '4px 4px 0px 0px rgba(0, 0, 0, 1)',
+        'neo-lg': '12px 12px 0px 0px rgba(0, 0, 0, 1)',
+        'neo-xl': '20px 20px 0px 0px var(--neo-secondary)',
       },
       keyframes: {
         'accordion-down': {

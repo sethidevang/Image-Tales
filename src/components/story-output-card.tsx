@@ -30,48 +30,50 @@ export default function StoryOutputCard({ story, isLoading }: StoryOutputCardPro
   }, [isCopied]);
 
   const StoryPlaceholder = () => (
-    <div className="text-center text-muted-foreground p-8 flex flex-col items-center justify-center h-full">
-      <Wand2 className="h-12 w-12 mb-4" />
-      <p className="font-semibold">Your generated story will appear here.</p>
-      <p className="text-sm">Provide an image to begin the magic.</p>
+    <div className="text-center p-16 flex flex-col items-center justify-center h-full border-8 border-dashed border-black bg-neo-main/10 sm:rotate-1">
+      <Wand2 className="h-32 w-32 mb-10 text-black opacity-30" />
+      <p className="font-black text-5xl uppercase tracking-tighter mb-4">Awaiting Image</p>
+      <p className="font-bold text-xl uppercase opacity-40 max-w-xl mx-auto">Upload a picture and let the AI weave a masterpiece for you.</p>
     </div>
   );
-
+ 
   const LoadingSkeleton = () => (
-    <div className="space-y-4 p-6">
-      <Skeleton className="h-4 w-3/4" />
-      <Skeleton className="h-4 w-full" />
-      <Skeleton className="h-4 w-full" />
-      <Skeleton className="h-4 w-5/6" />
-      <Skeleton className="h-4 w-full" />
-      <Skeleton className="h-4 w-1/2" />
+    <div className="space-y-10 p-10">
+      <Skeleton className="h-8 w-3/4 bg-neo-black/20" />
+      <Skeleton className="h-8 w-full bg-neo-black/20" />
+      <Skeleton className="h-8 w-full bg-neo-black/20" />
+      <Skeleton className="h-8 w-5/6 bg-neo-black/20" />
+      <Skeleton className="h-8 w-full bg-neo-black/20" />
+      <Skeleton className="h-8 w-1/2 bg-neo-black/20" />
     </div>
   );
 
   return (
-    <Card className="w-full min-h-[30rem] flex flex-col">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Wand2 />
-          <span>Your Story</span>
+    <Card className="w-full min-h-[50rem] flex flex-col bg-white">
+      <CardHeader className="bg-neo-main p-12 border-b-8 border-black">
+        <CardTitle className="flex items-center gap-6 text-4xl font-black uppercase">
+          <Wand2 className="w-14 h-14" />
+          <span>The Story</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <ScrollArea className="h-96 w-full pr-4">
+      <CardContent className="flex-grow p-12">
+        <ScrollArea className="h-[35rem] w-full pr-6">
           {isLoading ? (
             <LoadingSkeleton />
           ) : story ? (
-            <p className="text-base leading-relaxed whitespace-pre-wrap">{story}</p>
+            <div className="text-2xl md:text-4xl font-black leading-tight whitespace-pre-wrap selection:bg-neo-secondary selection:text-white">
+              {story}
+            </div>
           ) : (
             <StoryPlaceholder />
           )}
         </ScrollArea>
       </CardContent>
       {story && !isLoading && (
-        <CardFooter>
-          <Button onClick={handleCopy} variant="outline" className="w-full">
-            {isCopied ? <Check className="mr-2 text-green-500" /> : <Copy className="mr-2" />}
-            {isCopied ? 'Copied!' : 'Copy Story'}
+        <CardFooter className="p-12 pt-0">
+          <Button onClick={handleCopy} variant="neoAccent" className="w-full font-black py-12 text-3xl shadow-neo-lg" magnetic={true}>
+            {isCopied ? <Check className="mr-4 w-10 h-10" /> : <Copy className="mr-4 w-10 h-10" />}
+            {isCopied ? 'STORY COPIED!' : 'COPY TO CLIPBOARD'}
           </Button>
         </CardFooter>
       )}
