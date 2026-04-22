@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  serverExternalPackages: ['@opentelemetry/sdk-node', '@opentelemetry/exporter-jaeger', 'handlebars'],
 };
 
 export default nextConfig;
